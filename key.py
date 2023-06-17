@@ -1,1 +1,1 @@
-keys = [] #anda bisa copy dari file .txtnya
+keys = [] #copy from keyname.txt file

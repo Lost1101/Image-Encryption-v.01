@@ -41,4 +41,14 @@ thank you for using. Enjoy our program:
 
 credit :
 "Group 33"
- 
+
+ # Group 33 fellas :
+  <a href = "https://github.com/Lost1101">
+  <img src = "https://avatars.githubusercontent.com/u/114213500?v=4"/>
+</a>
+ <a href = "https://github.com/RyZal25">
+  <img src = "https://avatars.githubusercontent.com/u/118142575?v=4"/>
+</a>
+ <a href = "https://github.com/revlizn">
+  <img src = "https://avatars.githubusercontent.com/u/114213552?v=4"/>
+</a>

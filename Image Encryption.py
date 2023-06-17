@@ -1,3 +1,8 @@
+#IMPORTANT!!!!!!!
+#If you want the result file is organized, better place them in separated folder
+#you can set up the folder location below (marked with ☆☆☆)
+
+
 # Import the required Libraries
 from tkinter import *
 from tkinter import ttk, filedialog, messagebox
@@ -11,10 +16,10 @@ from Crypto.Util.Padding import unpad
 
 import os
 
-#Make an instance for tkinter
+#Create instance for the tkinter frame
 win = Tk()
 
-#Geometry for program window
+#Geometry spec for the application window
 win.geometry("800x600")
 win.title("Image Encryption")
 
@@ -24,17 +29,17 @@ path_enc = ''
 path_txt = ''
 
 #FUNCTION
-#encryption frame
+#Encryption Frame 
 def frame1():
-    dekripsi_frame.forget()
-    enkripsi_frame.pack(pady=5)
+    decrypt_frame.forget()
+    encrypt_frame.pack(pady=5)
 
-#decryption frame
+#Decryption Frame 
 def frame2():
-    enkripsi_frame.forget()
-    dekripsi_frame.pack(pady=5)
+    encrypt_frame.forget()
+    decrypt_frame.pack(pady=5)
 
-#Untuk mencari file image yang akan dienkripsi
+#To find the image file to be encrypted
 def open_file_img():
     global path
     file = filedialog.askopenfile(mode='r', filetypes=[('Image Files', '*.png'),
@@ -42,29 +47,29 @@ def open_file_img():
                                                        ('Image Files', '*.jpeg')])
     if file:
         filepath = os.path.abspath(file.name)
-        Label(enkripsi_frame, text="Filenya berlokasi di : " + str(filepath), font=('Aerial 11')).pack()
+        Label(encrypt_frame, text="The file is located at : " + str(filepath), font=('Aerial 11')).pack()
         path = (str(filepath))
 
-#Untuk mencari file .enc yang akan didekripsi
+#To find the .enc file to decrypt
 def open_file_enc():
     global path_enc
     file = filedialog.askopenfile(mode='r', filetypes=[('Encryption file', '*.enc')])
     if file:
         filepath = os.path.abspath(file.name)
-        Label(dekripsi_frame, text="Filenya berlokasi di : " + str(filepath), font=('Aerial 11')).pack()
+        Label(decrypt_frame, text="The file is located at : " + str(filepath), font=('Aerial 11')).pack()
         path_enc = (str(filepath))
 
-#Code untuk mengenkripsi
+#Code to encrypt
 def enc(alamat, nama, key):
     if nama.get() == '':
-        messagebox.showwarning("Warning", "Nama untuk file .enc belum diisi!")
+        messagebox.showwarning("Warning", "The name for the .enc file is missing!")
     else:
-        #membaca file input yang akan di enkrip
+        #reads the input file to be encrypted
         input_file = alamat
         with open(input_file, "rb") as f:
             data = f.read()
 
-        # fungsi yang digunakan untuk mengenkrip data menggunakan AES-CBC
+        # function used to encrypt data using AES-CBC
         def encrypt_data(msg: bytes, key: bytes):
             key = SHA256.new(key).digest()
             iv = os.urandom(AES.block_size)
@@ -72,41 +77,41 @@ def enc(alamat, nama, key):
             enc = aes.encrypt(pad(msg, AES.block_size))
             return iv + enc
 
-        # fungsi untuk mengenkripsi data 2 stack dengan menggunakan key yang berbeda dan secara acak
+        # function to encrypt 2 stacks of data using different and random keys
         def double_encrypt(msg: bytes):
             keys = [os.urandom(32) for _ in range(2)]
             for key in keys:
                 msg = encrypt_data(msg, key)
             return keys, msg
 
-        # menuliskan hasil keluaran enkripsi pada nama file yang diinginkan dan lokasi yang diinginkan
+        # write the output of the encryption in the desired file name and desired location
         output = (nama.get() + '.enc')
-        output_file = ('D:\Image Encryption\Hasil Enkripsi\{}'.format(output))
+        output_file = ('YOUR PATH STORAGE\image_encryption\Encryption Result\{}'.format(output)) #☆☆☆
         keys, encrypted_data = double_encrypt(data)
         with open(output_file, "wb") as f:
             f.write(encrypted_data)
 
-        # menyimpan kunci enkripsi di folder Key dan usahakan di sembunyikan (Admin only) setelah mengenkripsi
-        nama_key = key.get() + '.txt'
-        output_key_file = ('D:\Image Encryption\Key\{}'.format(nama_key))
+        # save the encryption key in the Key folder and try to hide it (Admin only) after encrypting
+        key_name = key.get() + '.txt'
+        output_key_file = ('YOUR PATH STORAGE\image_encryption\Key\{}'.format(key_name)) #☆☆☆
         with open(output_key_file, "w") as f:
             f.write("{}\n".format(keys))
-            messagebox.showinfo("Yeay!", "File berhasil dienkrip!")
+            messagebox.showinfo("Yeay!", "File encrypted successfully!")
 
-#Code untuk mendekripsi
+#Code to decrypt
 def dec(path, output):
     from key import keys
     if output.get() == '':
-        messagebox.showwarning("Warning", "Nama untuk file output belum diisi!")
+        messagebox.showwarning("Warning", "The name for the output file is missing!")
     else:
-        # fungsi yang akan digunakan untuk mendekrip data menggunakan AES-CBC
+        # function that will be used to decrypt data using AES-CBC
         def decrypt_data(enc: bytes, key: bytes, iv: bytes):
             key = SHA256.new(key).digest()
             aes = AES.new(key, AES.MODE_CBC, iv)
             msg = aes.decrypt(enc)
             return unpad(msg, AES.block_size)
 
-        # fungsi untuk melakukan dekrip berlapis sebanyak 2 stack dengan implementasi key berbeda
+        # function to perform layered decryption of 2 stacks with different key implementations
         def double_decrypt(enc: bytes, keys: list):
             keys = keys[::-1]
             for key in keys:
@@ -115,17 +120,17 @@ def dec(path, output):
                 enc = decrypt_data(enc, key, iv)
             return enc
 
-        # membaca isi file yang akan di dekrip valuenya
+        # read the contents of the file that will decrypt the value
         input_file = (path)
         with open(input_file, "rb") as f:
             data = f.read()
 
-        # mendeskripsikan hasil keluaran berupa nama file dan menampilkan hasil dekrip file
-        output_file = output.get()  # usahakan samakan ekstensi dengan file awalnya
+        # describes the output in the form of a file name and displays the results of the file decryption
+        output_file = output.get()  # try to match the extension with the initial file
         decrypted_data = double_decrypt(data, keys)
-        with open('D:\Image Encryption\Hasil Dekripsi\{}'.format(output_file), "wb") as f:
+        with open('YOUR PATH STORAGE\image_encryption\Encryption Result\{}'.format(output_file), "wb") as f: #☆☆☆
             f.write(decrypted_data)
-        messagebox.showinfo("Ingfo", "File berhasil didekrip")
+        messagebox.showinfo("Yeay!", "File successfully decrypted!")
 
 
 #INTERFACE
@@ -133,43 +138,43 @@ def dec(path, output):
 parent =Frame(win)
 
 main_label =Label(win, text="꒰⑅´˘`⑅꒱♡✩‧₊˚IMAGE ENCRYPTION˚₊‧✩♡꒰⑅´˘`⑅꒱", font=('Georgia 24')).pack(pady=5)
-secondary_label =Label(win, text="Pilih yang ingin anda lakukan :").pack(pady=5)
+secondary_label =Label(win, text="Choose what you want to do :").pack(pady=5)
 var = IntVar()
 parent.pack(pady=(0,10))
 
-#Radiobutton untuk memilih apa yang ingin dilakukan
-R1 = Radiobutton(parent, text="Enkripsi", variable=var, value=1, command=frame1).pack(side='left')
-R2 = Radiobutton(parent, text="Dekripsi", variable=var, value=2, command=frame2).pack(side='left')
+#Radiobutton to choose what to do
+R1 = Radiobutton(parent, text="Encryption", variable=var, value=1, command=frame1).pack(side='left')
+R2 = Radiobutton(parent, text="Decryption", variable=var, value=2, command=frame2).pack(side='left')
 
-enkripsi_frame = Frame(win)
-dekripsi_frame = Frame(win)
+encrypt_frame = Frame(win)
+decrypt_frame = Frame(win)
 
-#INTERFACE ENKRIPSI
-#Label judul
-Label(enkripsi_frame, text="ENKRIPSI", font=('Georgia 16')).pack(pady=5)
-
-#Widget
-nama_enkripsi = StringVar()
-nama_key = StringVar()
-Label(enkripsi_frame, text="Klik tombol untuk mencari gambar yang ingin dienkripsi", font=('Georgia 13')).pack(pady=10)
-Button(enkripsi_frame, text="Cari gambar", command=open_file_img).pack(pady=10)
-Label(enkripsi_frame,text="Nama file enkripsi (.enc)").pack(pady=5)
-Entry(enkripsi_frame, textvariable=nama_enkripsi).pack(pady=5)
-Label(enkripsi_frame,text="Nama file key (.txt)").pack(pady=5)
-Entry(enkripsi_frame, textvariable=nama_key).pack(pady=5)
-Button(enkripsi_frame, text="Enkripsi!", command=lambda: enc(path, nama_enkripsi, nama_key)).pack(pady=10)
-
-#INTERFACE DEKRIPSI
-#Label judul
-Label(dekripsi_frame, text="DEKRIPSI", font=('Georgia 16')).pack(pady=5)
+#ENCRYPTION INTERFACE 
+#Title tag
+Label(encrypt_frame, text="ENCRYPTION", font=('Georgia 16')).pack(pady=5)
 
 #Widget
-nama_dekripsi = StringVar()
-Label(dekripsi_frame, text="Klik tombol untuk mencari file.enc yang akan didekripsi", font=('Georgia 13')).pack(pady=10)
-Button(dekripsi_frame, text="Cari .enc", command=open_file_enc).pack(pady=10)
-Label(dekripsi_frame,text="Nama file output/bentuk awal (.jpg,.png,.jpeg. Contoh: example.png)").pack(pady=5)
-Entry(dekripsi_frame, textvariable=nama_dekripsi).pack(pady=5)
-Label(dekripsi_frame, text="Key nya tolong masukkan di file bernama key.py", font=('Georgia 13')).pack(pady=10)
-Button(dekripsi_frame, text="Dekripsi!", command=lambda: dec(path_enc, nama_dekripsi)).pack(pady=10)
+encrypt_name = StringVar()
+key_name = StringVar()
+Label(encrypt_frame, text="Click the button to find the image you want to encrypt", font=('Georgia 13')).pack(pady=10)
+Button(encrypt_frame, text="Search images", command=open_file_img).pack(pady=10)
+Label(encrypt_frame,text="Encryption file name (.enc)").pack(pady=5)
+Entry(encrypt_frame, textvariable=encrypt_name).pack(pady=5)
+Label(encrypt_frame,text="Key file name (.txt)").pack(pady=5)
+Entry(encrypt_frame, textvariable=key_name).pack(pady=5)
+Button(encrypt_frame, text="Encrypt!", command=lambda: enc(path, encrypt_name, key_name)).pack(pady=10)
+
+#DECRYPTION INTERFACE 
+#Title tag
+Label(decrypt_frame, text="DECRYPTION", font=('Georgia 16')).pack(pady=5)
+
+#Widget
+decrypt_name = StringVar()
+Label(decrypt_frame, text="Click the button to locate the.enc file to decrypt", font=('Georgia 13')).pack(pady=10)
+Button(decrypt_frame, text="Search for .enc", command=open_file_enc).pack(pady=10)
+Label(decrypt_frame,text="Output file name/original form (.jpg,.png,.jpeg. Example: example.png)").pack(pady=5)
+Entry(decrypt_frame, textvariable=decrypt_name).pack(pady=5)
+Label(decrypt_frame, text="Please enter the key in a file called key.py", font=('Georgia 13')).pack(pady=10)
+Button(decrypt_frame, text="Decrypt!", command=lambda: dec(path_enc, decrypt_name)).pack(pady=10)
 
 win.mainloop()

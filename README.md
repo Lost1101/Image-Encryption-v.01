@@ -47,8 +47,8 @@ credit :
   <img src = "https://avatars.githubusercontent.com/u/114213500?v=4" style="width:100px; height=100%; border-radius:50%"/>
 </a>
  <a href = "https://github.com/RyZal25">
-  <img src = "https://avatars.githubusercontent.com/u/118142575?v=4"  style="width:100px; height=100%; border-radius:50%/>
+  <img src = "https://avatars.githubusercontent.com/u/118142575?v=4"  style="width:100px; height=100%; border-radius:50%"/>
 </a>
  <a href = "https://github.com/revlizn">
-  <img src = "https://avatars.githubusercontent.com/u/114213552?v=4"  style="width:100px; height=100%; border-radius:50%/>
+  <img src = "https://avatars.githubusercontent.com/u/114213552?v=4"  style="width:100px; height=100%; border-radius:50%"/>
 </a>

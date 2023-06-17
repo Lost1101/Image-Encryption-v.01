@@ -11,10 +11,10 @@ from Crypto.Util.Padding import unpad
 
 import os
 
-#Membuat instance untuk frame tkinter
+#Make an instance for tkinter
 win = Tk()
 
-#Menentukan Geometri untuk jendela aplikasi
+#Geometry for program window
 win.geometry("800x600")
 win.title("Image Encryption")
 
@@ -24,12 +24,12 @@ path_enc = ''
 path_txt = ''
 
 #FUNCTION
-#Frame Enkripsi
+#encryption frame
 def frame1():
     dekripsi_frame.forget()
     enkripsi_frame.pack(pady=5)
 
-#Frame Dekripsi
+#decryption frame
 def frame2():
     enkripsi_frame.forget()
     dekripsi_frame.pack(pady=5)

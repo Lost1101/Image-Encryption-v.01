@@ -1,5 +1,7 @@
 # image-encryption
-![logo](https://github.com/Lost1101/Image-Encryption-v.01/assets/114213500/b272deb7-b908-4f89-9161-0ac7c8db8a33)
+<p align="center">
+  <img src="https://github.com/Lost1101/Image-Encryption-v.01/assets/114213500/b272deb7-b908-4f89-9161-0ac7c8db8a33" />
+</p>
 
 Using python language to encrypt data. The algorithm that we implemented in this project is AES (Advance Encryption Standard) using CBC Mode. We Do Double Encryption of which data will be encrypted on the data so that we get a more secure type of data. We are very happy that someone will make some improvements or use the main logic of our code >.&lt;
 

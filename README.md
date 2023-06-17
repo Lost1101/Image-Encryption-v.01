@@ -53,8 +53,7 @@ If you have any suggestions or comments, please express them in a more modern co
 
 thank you for using. Enjoy our program~
 
-# ❤️ CREDITS
-"Group 33"
+# MAKE WITH ✨ FROM Group 33
 
  # 🤓 Group 33 fellas :
   <a href = "https://github.com/Lost1101">

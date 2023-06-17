@@ -47,11 +47,11 @@ Step description:
 4. Press "Decryption!!" when done.
 5. The image is saved in the "decryption result" folder
 
-# ✨ REMARKS
+# 🔭 REMARKS
 The program is still in development, so all kinds of changes, optimizations and fixes are expected
 If you have any suggestions or comments, please express them in a more modern code format.
 
-thank you for using. Enjoy our program~
+Thank you. Enjoy our program~
 
 # MAKE WITH ✨ FROM Group 33
 
